@@ -22,7 +22,23 @@ public class SearchController {
         model.addAttribute("columns", columnChoices);
         return "search";
     }
+//    @RequestMapping(value = "")
+//    public String searchSplash(Model model, @RequestParam String searchType, @RequestParam String searchTerm){
+//        ArrayList<Job> jobs = JobData.findAll();
+//        model.addAttribute("title", "All Jobs");
+//        model.addAttribute("jobs", jobs);
+//        return "list-jobs";
+//    }
+
 
     // TODO #3 - Create a handler to process a search request and render the updated search view.
+    @RequestMapping(value = "/results")
+    public String searchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm){
+        ArrayList<Job> jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+            model.addAttribute("title", "Jobs with " + ": " + searchTerm);
+        model.addAttribute("jobs", jobs);
+
+        return "list-jobs";
+    }
 
 }
